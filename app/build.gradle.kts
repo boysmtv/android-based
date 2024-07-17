@@ -58,11 +58,6 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
     implementation(project(":core:utilities"))
-    implementation(project(":feature:menu"))
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:movie"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:services"))
 
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.play.services)

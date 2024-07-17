@@ -11,6 +11,7 @@ import com.kotlin.learn.core.common.util.JsonUtil
 import com.kotlin.learn.core.common.util.network.NetworkConnectionLiveData
 import com.kotlin.learn.core.common.util.network.debounce
 import com.kotlin.learn.core.common.data.preferences.DataStorePreferences
+import com.kotlin.learn.core.common.util.listener.CommonListener
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialog
 import com.kotlin.learn.core.ui.dialog.base.BaseDataDialogGeneral
 import com.kotlin.learn.core.ui.dialog.common.DialogGeneralError
@@ -19,10 +20,13 @@ import com.kotlin.learn.core.ui.dialog.common.DialogWithAction
 import com.kotlin.learn.core.ui.dialog.common.ProgressBarDialog
 import com.kotlin.learn.core.ui.util.showDialog
 import com.kotlin.learn.core.utilities.Constant.EMPTY_STRING
+import com.kotlin.learn.core.utilities.Constant.ZERO
+import com.kotlin.learn.core.utilities.ResponseConstants.HttpCode.CODE_400
+import com.kotlin.learn.core.utilities.ResponseConstants.HttpCode.CODE_401
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInflater: LayoutInflater) -> T) :
-    Fragment() {
+    Fragment(), CommonListener {
 
     var binding: T by viewBinding()
 
@@ -31,10 +35,15 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
     private var onReconnect: (() -> Unit)? = null
 
     private var dialog: ProgressBarDialog? = null
-    private var dialogGeneralError: DialogGeneralError? = null
+    internal var dialogGeneralError: DialogGeneralError? = null
     private lateinit var dialogNoInternet: DialogNoInternet
     private var needToShowErrorConnection = false
     private var isConnectionAvailable = true
+    var initCustomOnLoadState: (() -> Unit)? = null
+    var initCustomOnSuccessState: (() -> Unit)? = null
+    var initCustomOnErrorState: (() -> Unit)? = null
+    var retryCount = ZERO
+    var retryReinvoke = ZERO
 
     @Inject
     lateinit var dataStorePreferences: DataStorePreferences
@@ -65,6 +74,18 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
         }
     }
 
+    override fun restartTask() {
+        TODO("Not yet implemented")
+    }
+
+    override fun mainErrorHandler(code: String?, title: String?, message: String?, httpCode: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showProgressDialog(isShow: Boolean) {
+        TODO("Not yet implemented")
+    }
+
     fun showDialogWithActionButton(
         dataToDialog: BaseDataDialog,
         actionClickPrimary: () -> Unit,
@@ -88,7 +109,7 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
             dialog = null
         }
 
-    private fun showGeneralError(
+    fun showGeneralError(
         data: BaseDataDialogGeneral,
         actionClick: () -> Unit,
         actionClickSecondary: () -> Unit,
@@ -116,17 +137,17 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
         ) {}
     }
 
-    private fun onDismissDialogGeneralError(): () -> Unit = {
+    fun onDismissDialogGeneralError(): () -> Unit = {
         dialogGeneralError?.dismiss()
         dialogGeneralError = null
     }
 
-    private fun dismissDialogGeneralError() {
+    fun dismissDialogGeneralError() {
         dialogGeneralError?.dismiss()
         dialogGeneralError = null
     }
 
-    private fun showErrorNoInternetConnection() {
+    fun showErrorNoInternetConnection() {
         dialogNoInternet = DialogNoInternet()
         dialogNoInternet.show(childFragmentManager, dialogNoInternet.tag)
     }
@@ -146,6 +167,42 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
         dialog = null
         dialogGeneralError = null
         super.onDestroy()
+    }
+
+    open fun errorHandler(
+        code: String?,
+        title: String? = null,
+        message: String? = null,
+        httpCode: String?,
+    ) {
+        when {
+            httpCode == CODE_400 ->
+                showGeneralError(
+                    BaseDataDialogGeneral(
+                        title = title,
+                        message = message,
+                        icon = R.drawable.ic_warning_rounded,
+                        textPrimaryButton = "OK",
+                        visibleBackToSplash = true,
+                    ),
+                    actionClick = { dismissDialogGeneralError() },
+                    actionClickSecondary = { backToSplash() },
+                )
+            else -> {
+                dialog?.dismiss()
+                showGeneralError(
+                    BaseDataDialogGeneral(
+                        title = title,
+                        message = message,
+                        icon = R.drawable.ic_warning_rounded,
+                        textPrimaryButton = "OK",
+                        visibleBackToSplash = true,
+                    ),
+                    actionClick = { dismissDialogGeneralError() },
+                    actionClickSecondary = { backToSplash() }
+                )
+            }
+        }
     }
 
 }

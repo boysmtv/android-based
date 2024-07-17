@@ -27,13 +27,8 @@ include(":core:network")
 include(":core:utilities")
 include(":core:nav")
 include(":core:ui")
-
-include(":feature:movie")
-include(":feature:auth")
-include(":feature:splash")
-include(":feature:services")
-include(":feature:menu")
-include(":feature:common")
-
-include(":api:splash")
 include(":core:entity")
+
+include(":api-splash")
+
+include(":feature-splash")
