@@ -1,9 +1,9 @@
 name: AndroidBuild
 on:
   pull_request:
-    branches: [ feature/060424-Pipeline ]
+    branches: [ master ]
   push:
-    branches: [ feature/060424-Pipeline ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -24,5 +24,5 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
-          name: movie-based.apk
+          name: android-based.apk
           path: app/build/outputs/apk/debug/app-debug.apk

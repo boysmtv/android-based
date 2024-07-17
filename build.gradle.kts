@@ -21,6 +21,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.navigation.safeargs) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
 }
 true
 

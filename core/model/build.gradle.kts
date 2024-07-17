@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
     implementation(libs.androidx.room.room.runtime)
     implementation(libs.androidx.room.room.ktx)
 

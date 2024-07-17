@@ -28,7 +28,8 @@ dependencies {
 
     implementation(libs.bundles.viewmodel)
     implementation(libs.bundles.play.services)
-    implementation(libs.bundles.firebasse)
+    implementation(libs.bundles.firebase)
+
     implementation(libs.androidx.activity.activity.ktx)
     implementation(libs.androidx.activity.fragment.ktx)
     implementation(libs.constraintlayout)
@@ -39,7 +40,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.hilt.android)
     implementation(libs.androidx.databinding.runtime)
-    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)
     implementation(libs.androidx.work.runtime.ktx)
 

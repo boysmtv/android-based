@@ -27,6 +27,7 @@ hilt = "2.45"
 hiltExt = "1.0.0"
 junit4 = "4.13.2"
 kotlin = "1.8.21"
+kotlinPlugin = "1.8.10"
 kotlinxCoroutines = "1.6.4"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.5.1"
@@ -72,6 +73,9 @@ threeTenABP = "1.4.1"
 i18nLanguagePack = "1.0.0"
 navigationRuntimeKtx = "2.6.0"
 room = "2.4.2"
+okhttp = "4.9.0"
+retrofit = "2.9.0"
+coroutines = "1.6.4"
 
 [libraries]
 accompanist-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
@@ -145,6 +149,19 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databinding" }
 
+# OKHTTP
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
+
+# Retrofit"
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-moshi-converter = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+
+# Moshi
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
 # Facebook
 facebook-shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 facebook-login = { group = "com.facebook.android", name = "facebook-login", version.ref = "shimmer" }
@@ -196,10 +213,6 @@ com-google-firebase-firebase-messaging = { group = "com.google.firebase", name =
 com-google-firebase-firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseFessagingKtx" }
 com-google-firebase-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
-# Moshi
-com-squareup-moshi-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
-com-squareup-moshi-moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
-
 # Security
 androidx-security-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 androidx-datastore-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
@@ -221,12 +234,16 @@ androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", v
 androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
+coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinPlugin"  }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragment" }
@@ -234,8 +251,13 @@ navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref 
 [bundles]
 ktor = ["ktor-content-negotiation", "ktor-core", "ktor-logging", "ktor-okhttp", "ktor-resources", "ktor-serialization-json", "ktor-serialization-auth"]
 viewmodel = ["androidx-lifecycle-lifecycle-livedata-ktx", "androidx-lifecycle-lifecycle-runtime-ktx", "androidx-lifecycle-lifecycle-viewmodel-savedstate", "androidx-lifecycle-lifecycle-compiler", "androidx-lifecycle-lifecycle-common-java8", "androidx-lifecycle-lifecycle-service", "androidx-lifecycle-lifecycle-process", "androidx-lifecycle-lifecycle-reactivestreams-ktx", "androidx-lifecycle-lifecycle-runtime-testing"]
-firebasse = ["com-google-firebase-firebase-auth", "com-google-firebase-firebase-common-ktx", "com-google-firebase-firebase-database-ktx", "com-google-firebase-firebase-messaging", "com-google-firebase-firebase-messaging-ktx", "com-google-firebase-firebase-firestore-ktx"]
-moshi = ["com-squareup-moshi-moshi-kotlin", "com-squareup-moshi-moshi-kotlin-codegen"]
+firebase = ["com-google-firebase-firebase-auth", "com-google-firebase-firebase-common-ktx", "com-google-firebase-firebase-database-ktx", "com-google-firebase-firebase-messaging", "com-google-firebase-firebase-messaging-ktx", "com-google-firebase-firebase-firestore-ktx"]
 youtube = ["com-pierfrancescosoffritti-androidyoutubeplayer-core", "androidx-work-runtime-ktx"]
 play-services = ["com-google-android-gms-play-services-auth", "com-google-android-gms-play-services-location"]
 facebook = ["facebook-shimmer", "facebook-login"]
+network = ["okhttp", "okhttp-logging", "okhttp-sse", "retrofit", "retrofit-moshi-converter", "moshi-kotlin", "moshi-kotlin-codegen"]
+dagger = ["hilt-android"]
+dagger-kapt = ["hilt-compiler"]
+common = ["androidx-core-ktx", "androidx-appcompat", "timber"]
+core = ["coroutines", "coroutines-android", "com-jakewharton-threetenabp-threetenabp", "com-i18next-i18next-android"]
+room = ["androidx-room-room-runtime","androidx-room-room-ktx","androidx-room-room-compiler"]

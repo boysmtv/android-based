@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.jp.wasabeef.glide.transformations)
     implementation(libs.jp.wasabeef.blurry)
     implementation(libs.androidx.databinding.runtime)
-    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
     implementation(libs.androidx.datastore.datastore.preferences)
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.com.google.firebase.firebase.common.ktx)

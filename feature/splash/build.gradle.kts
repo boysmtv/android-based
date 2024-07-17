@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.jp.wasabeef.glide.transformations)
     implementation(libs.jp.wasabeef.blurry)
     implementation(libs.androidx.databinding.runtime)
-    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
 
     kapt(libs.hilt.compiler)
 

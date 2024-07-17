@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 apply {
@@ -17,16 +19,18 @@ android {
 val customModulePath: groovy.lang.Closure<Any> by ext
 
 dependencies {
+    implementation(customModulePath(":core:entity"))
     implementation(customModulePath(":core:ui"))
     implementation(customModulePath(":core:model"))
     implementation(customModulePath(":core:utilities"))
+
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     implementation(libs.paging.runtime)
 
     implementation(libs.material)
     implementation(libs.androidx.security.security.crypto)
-    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
     implementation(libs.com.google.android.gms.play.services.auth)
     implementation(libs.androidx.datastore.datastore.preferences)
     implementation(libs.com.google.firebase.firebase.auth)
@@ -39,6 +43,10 @@ dependencies {
     implementation(libs.androidx.room.room.runtime)
     implementation(libs.androidx.room.room.ktx)
 
-    kapt(libs.hilt.compiler)
-    kapt(libs.androidx.room.room.compiler)
+    implementation(libs.bundles.common)
+    implementation(libs.bundles.core)
+    implementation(libs.bundles.network)
+    implementation(libs.bundles.dagger)
+
+    kapt(libs.bundles.dagger.kapt)
 }
